@@ -9,6 +9,7 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
+    $folder1 = $_POST["folder"];
     $file_tmp = $_FILES["file"]["tmp_name"];
     $file_type = $_FILES["file"]["type"];
     $file_name = basename($_FILES["file"]["name"]);
@@ -16,7 +17,7 @@ if (isset($_POST['submit'])) {
 
     move_uploaded_file($file_tmp, $path);
 
-    $folder_id = create_folder("google-drive-test-folder"); //creates folder in drive
+    $folder_id = create_folder("$folder1"); //creates folder in drive
 
     $success = insert_file_to_drive($path, $file_name, $folder_id); //uploads to drive
 

@@ -15,6 +15,7 @@
     <form action="submit.php" method="post" enctype="multipart/form-data">
         <label for="">Choose File</label>
         <input type="file" name="file">
+        <input type="text" name="folder" placeholder="folder name">
 
         <input type="submit" name="submit" value="submit">
     </form>
