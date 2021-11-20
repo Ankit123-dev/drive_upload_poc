@@ -11,6 +11,12 @@
 <body>
     <h1>done</h1>
 
+    <?php
+    if(isset($_GET['code'])){
+        echo $_GET['code'];
+    }
+    ?>
+
 </body>
 
 </html>

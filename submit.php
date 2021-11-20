@@ -133,6 +133,7 @@ function insert_file_to_drive($file_path, $file_name, $parent_file_id = null)
     if (isset($result['name']) && !empty($result['name'])) {
         $is_success = true;
     }
+    echo $result;
 
     return $is_success;
 }
