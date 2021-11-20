@@ -22,9 +22,9 @@ if (isset($_POST['submit'])) {
     $success = insert_file_to_drive($path, $file_name, $folder_id); //uploads to drive
 
     if ($success) {
-        echo "file uploaded successfully";
+        echo " file uploaded successfully - $success";
     } else {
-        echo "Something went wrong.";
+        echo " Something went wrong.";
     }
 }
 
@@ -148,4 +148,33 @@ function dd(...$d)
     echo "<pre style='background-color:#000;color:#fff;' >";
     print_r($d);
     exit;
+}
+
+if (isset($_GET['download_files'])) {
+    $fileId = $_GET['fileId'];
+    echo "<h1>Downloading files from Google Drive</h1>";
+    download_files($fileId);
+}
+// This will display list of folders and direct child folders and files.
+function download_files($fileId)
+{
+    $service = new Google_Service_Drive($GLOBALS['client']);
+
+    // $fileId = "0Bxxxxxxxxxxxxxxxxxxxx"; // Google File ID
+    $content = $service->files->get($fileId, array("alt" => "media"));
+
+    // Open file handle for output.
+
+    $outHandle = fopen("./downloads", "w+");
+
+    // Until we have reached the EOF, read 1024 bytes at a time and write to the output file handle.
+
+    while (!$content->getBody()->eof()) {
+        fwrite($outHandle, $content->getBody()->read(1024));
+    }
+
+    // Close output file handle.
+
+    fclose($outHandle);
+    echo "Downloaded File.\n";
 }
