@@ -35,26 +35,35 @@ function getClient()
         if ($client->getRefreshToken()) {
             $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
         } else {
-// Request authorization from the user.
+            // Request authorization from the user.
             $authUrl = $client->createAuthUrl();
-            printf("Open the following link in your browser:\n%s\n", $authUrl);
+            print("Open the following link in your browser:\n\n");
+            echo '<a class="btn btn-primary btn-xs" target="_blank" href="' . $authUrl . '">Click To Get Verification Code</a>';
             print 'Enter verification code: ';
-            $authCode = trim(fgets(STDIN));
+            echo '<form action="" method="get">
+                        <input type="text" name="token_verification" id="">
+                        <input type="submit" value="Submit">
+                    </form>';
+            if (isset($_GET['token_verification'])) {
+                $authCode = $_GET['token_verification'];
 
-// Exchange authorization code for an access token.
-            $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-            $client->setAccessToken($accessToken);
+                // Exchange authorization code for an access token.
+                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                $client->setAccessToken($accessToken);
 
-// Check to see if there was an error.
-            if (array_key_exists('error', $accessToken)) {
-                throw new Exception(join(', ', $accessToken));
+                // Check to see if there was an error.
+                if (array_key_exists('error', $accessToken)) {
+                    throw new Exception(join(', ', $accessToken));
+                }
             }
         }
-// Save the token to a file.
-        if (!file_exists(dirname($tokenPath))) {
-            mkdir(dirname($tokenPath), 0700, true);
+        if (isset($_GET['token_verification'])) {
+            // Save the token to a file.
+            if (!file_exists(dirname($tokenPath))) {
+                mkdir(dirname($tokenPath), 0700, true);
+            }
+            file_put_contents($tokenPath, json_encode($client->getAccessToken()));
         }
-        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
     }
     return $client;
 }
@@ -68,13 +77,15 @@ $optParams = array(
     'pageSize' => 10,
     'fields' => 'nextPageToken, files(id, name)',
 );
-$results = $service->files->listFiles($optParams);
+if (isset($_GET['token_verification'])) {
+    $results = $service->files->listFiles($optParams);
 
-if (count($results->getFiles()) == 0) {
-    print "No files found.\n";
-} else {
-    print "Files:\n";
-    foreach ($results->getFiles() as $file) {
-        printf("%s (%s)\n", $file->getName(), $file->getId());
+    if (count($results->getFiles()) == 0) {
+        print "No files found.\n";
+    } else {
+        print "Files:\n";
+        foreach ($results->getFiles() as $file) {
+            printf("%s (%s)\n", $file->getName(), $file->getId());
+        }
     }
 }
