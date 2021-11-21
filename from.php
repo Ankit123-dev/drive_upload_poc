@@ -28,6 +28,14 @@
 
         <input type="submit" name="search_files" value="Search">
     </form>
+
+    <h2>Folder Search</h2>
+    <form action="submit.php" method="post" enctype="multipart/form-data">
+        <label for="">Search Folder</label>
+        <input type="text" name="search_text" placeholder="Type name">
+
+        <input type="submit" name="search_folders" value="Search">
+    </form>
 </body>
 
 </html>
