@@ -1,4 +1,8 @@
-token creation
+# download library
+
+composer require google/apiclient:^2.0
+
+# token creation
 
 php google-drive.php
 
