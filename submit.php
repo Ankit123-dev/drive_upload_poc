@@ -179,3 +179,27 @@ function download_files($fileId)
     fclose($outHandle);
     echo "Downloaded File.\n";
 }
+
+if (isset($_POST['search_files'])) {
+    $search_text = $_POST['search_text'];
+    echo "<h1>Search files from Google Drive</h1>";
+    search_files($search_text);
+}
+// This will display list of folders and direct child folders and files.
+function search_files($search_text)
+{
+    $service = new Google_Service_Drive($GLOBALS['client']);
+
+    $parameters['q'] = "name='$search_text' and trashed=false";
+    $files = $service->files->listFiles($parameters);
+
+    echo "<ul>";
+    foreach ($files as $k => $file) {
+        echo "<li>
+
+            {$file['name']} - {$file['id']} ---- " . $file['mimeType'];
+
+        echo "</li>";
+    }
+    echo "</ul>";
+}

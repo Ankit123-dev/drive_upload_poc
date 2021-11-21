@@ -19,6 +19,15 @@
 
         <input type="submit" name="submit" value="submit">
     </form>
+
+
+    <h2>File Search</h2>
+    <form action="submit.php" method="post" enctype="multipart/form-data">
+        <label for="">Search File</label>
+        <input type="text" name="search_text" placeholder="Type name">
+
+        <input type="submit" name="search_files" value="Search">
+    </form>
 </body>
 
 </html>
