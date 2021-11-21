@@ -171,17 +171,19 @@ function download_files($fileId)
     // echo "<pre>";
     // print_r($content);
 
-    $outHandle = fopen("./downloads", "w+");
+    // $outHandle = fopen("./downloads", "w+");
 
-    // Until we have reached the EOF, read 1024 bytes at a time and write to the output file handle.
+    // // Until we have reached the EOF, read 1024 bytes at a time and write to the output file handle.
 
-    while (!$content->getBody()->eof()) {
-        fwrite($outHandle, $content->getBody()->read(1024));
-    }
+    // while (!$content->getBody()->eof()) {
+    //     fwrite($outHandle, $content->getBody()->read(1024));
+    // }
 
-    // Close output file handle.
+    // // Close output file handle.
 
-    fclose($outHandle);
+    // fclose($outHandle);
+
+    file_put_contents('./downloads/file2.pdf', $content->getBody());
     echo "Downloaded File.\n";
 }
 
