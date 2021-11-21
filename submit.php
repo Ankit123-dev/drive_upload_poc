@@ -151,12 +151,12 @@ function dd(...$d)
     exit;
 }
 
-if (isset($_GET['download_files'])) {
-    $fileId = $_GET['fileId'];
+if (isset($_POST['download_files'])) {
+    $fileId = $_POST['fileId'];
     echo "<h1>Downloading files from Google Drive</h1>";
     download_files($fileId);
 }
-// This will display list of folders and direct child folders and files.
+
 function download_files($fileId)
 {
     $service = new Google_Service_Drive($GLOBALS['client']);
@@ -164,7 +164,12 @@ function download_files($fileId)
     // $fileId = "0Bxxxxxxxxxxxxxxxxxxxx"; // Google File ID
     $content = $service->files->get($fileId, array("alt" => "media"));
 
+    // $content = $service->files->get($fileId, array(
+    //     'fields' => 'id, description,webViewLink,webContentLink,properties'));
+
     // Open file handle for output.
+    // echo "<pre>";
+    // print_r($content);
 
     $outHandle = fopen("./downloads", "w+");
 
@@ -185,7 +190,7 @@ if (isset($_POST['search_files'])) {
     echo "<h1>Search files in Google Drive</h1>";
     search_files($search_text);
 }
-// This will display list of folders and direct child folders and files.
+
 function search_files($search_text)
 {
     $service = new Google_Service_Drive($GLOBALS['client']);
@@ -209,7 +214,7 @@ if (isset($_POST['search_folders'])) {
     echo "<h1>Search folders in Google Drive</h1>";
     search_folders($search_text);
 }
-// This will display list of folders and direct child folders and files.
+
 function search_folders($search_text)
 {
     $service = new Google_Service_Drive($GLOBALS['client']);

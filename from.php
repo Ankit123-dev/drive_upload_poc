@@ -36,6 +36,14 @@
 
         <input type="submit" name="search_folders" value="Search">
     </form>
+
+    <h2>Download File</h2>
+    <form action="submit.php" method="post" enctype="multipart/form-data">
+        <label for="">Search Folder</label>
+        <input type="text" name="fileId" placeholder="Type fileId">
+
+        <input type="submit" name="download_files" value="Download">
+    </form>
 </body>
 
 </html>
