@@ -21,8 +21,12 @@ if (isset($_POST['submit'])) {
 
     $success = insert_file_to_drive($path, $file_name, $folder_id); //uploads to drive
 
-    if ($success) {
-        echo " file uploaded successfully - $success";
+    if (!empty($success['name'])) {
+        echo " file uploaded successfully";
+        echo "<pre>";
+        echo "name : " . $success['name'] . "<br>";
+        echo "id : " . $success['id'] . "<br>";
+        print_r($success);
     } else {
         echo " Something went wrong.";
     }
@@ -133,9 +137,8 @@ function insert_file_to_drive($file_path, $file_name, $parent_file_id = null)
     if (isset($result['name']) && !empty($result['name'])) {
         $is_success = true;
     }
-    echo $result;
 
-    return $is_success;
+    return $result;
 }
 
 if (isset($_GET['list_files_and_folders'])) {
