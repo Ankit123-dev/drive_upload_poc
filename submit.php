@@ -237,3 +237,19 @@ function search_folders($search_text)
     }
     echo "</ul>";
 }
+
+if (isset($_POST['delete_files'])) {
+    $fileId = $_POST['fileId'];
+    echo "<h1>Deleting files from Google Drive</h1>";
+    delete_files($fileId);
+}
+
+function delete_files($fileId)
+{
+    $service = new Google_Service_Drive($GLOBALS['client']);
+    $content = $service->files->delete($fileId);
+    // echo "<pre>";
+    // print_r($content);
+
+    echo "Downloaded File.\n";
+}

@@ -44,6 +44,14 @@
 
         <input type="submit" name="download_files" value="Download">
     </form>
+
+    <h2>Delete File</h2>
+    <form action="submit.php" method="post" enctype="multipart/form-data">
+        <label for="">Search Folder</label>
+        <input type="text" name="fileId" placeholder="Type fileId">
+
+        <input type="submit" name="delete_files" value="Delete">
+    </form>
 </body>
 
 </html>
