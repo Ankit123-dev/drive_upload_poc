@@ -251,5 +251,5 @@ function delete_files($fileId)
     // echo "<pre>";
     // print_r($content);
 
-    echo "Downloaded File.\n";
+    echo "Deleted File.\n";
 }
